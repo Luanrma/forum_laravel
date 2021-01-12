@@ -18,6 +18,7 @@ class CreateTopicsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('question');
+            $table->integer('active');
             $table->integer('count_answers')->nullable();
             $table->timestamps();
 

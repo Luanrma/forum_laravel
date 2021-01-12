@@ -16,17 +16,31 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2">
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::current()->getName() === 'home' ? 'active' : ''}}" href="{{ route('home') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link {{ Route::current()->getName() === 'panel' ? 'active' : ''}}" href="{{ route('panel') }}">Painel</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::current()->getName() === 'index.topics' ? 'active' : ''}}" href="{{ route('index.topics') }}">Perguntas</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Route::current()->getName() === 'index.user' ? 'active' : ''}}" href="{{ route('index.user') }}">Usuário</a>
-                </li>
+                
+            </ul>
+            <ul class="nav justify-content-end">
+                @if (Auth::check())
+                    <div class="dropdown show">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </a>
+                      
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('logout.user') }}">Logout</a>
+                            </li>
+                        </div>
+                    </div>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::current()->getName() === 'index.user' ? 'active' : ''}}" href="{{ route('showLogin.user') }}">Login</a>
+                    </li>
+                @endif
             </ul>
             
         </div>

@@ -1,19 +1,23 @@
-@extends('layout')
+@extends('layouts.app')
 
-@section('main')  
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
 
-    <div class="container-intranet">   
-        <div class="intranet-forum">
-            <p>Perfil</p>
-        </div>
-        <div class="intranet-forum">
-            <a href="../public/topics">
-                <p>Forum</p>
-            </a>
-        </div>
-        <div class="intranet-forum">
-            <p>Informações</p>
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                    <a class='btn' href="{{ route('logout.user') }}">Logout</a>
+                    You are logged in!
+                </div>
+            </div>
         </div>
     </div>
-   
+</div>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class userController extends Controller
@@ -15,7 +17,7 @@ class userController extends Controller
      */
     public function index()
     {
-        return view('user-create');
+        //
     }
 
     /**
@@ -44,7 +46,7 @@ class userController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->route('index.user');
+        return redirect()->back();
     }
 
     /**
@@ -90,5 +92,48 @@ class userController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function showRegister()
+    {
+        return view('login.user-register');
+    }
+
+    public function showLogin()
+    {
+        return view('login.user-login');
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = Auth::attempt([
+            'email' => $request->email, 
+            'password' => $request->password
+            ]);
+
+        if($credentials) {
+            return redirect()->route('index.topics');
+        } else {
+            return redirect()->back()->withErrors(['Os dados informados não conferem!']);
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('showLogin.user');
+    }
+
+    public function showTopics() 
+    {
+        $id =  Auth::user()->id;
+ 
+        $user = User::where('id', $id)->first();
+        $topics = $user->topics()->get();
+                
+        return view('user ',[
+            'topics' => $topics
+        ]);
     }
 }

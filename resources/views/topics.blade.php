@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.layout')
 
 @section('main')  
     <div class="container topic-page my-5">
@@ -15,13 +15,13 @@
         <div class="col-12 topics">
 
             @foreach($topics as $topic)
-                <a href="{{ route('select.topic', ['id' => $topic->id]) }}">
+                <a href="{{ route('show.topic', ['id' => $topic->id]) }}">
                     <article class="topic-item">
                         <div class="col-10">
-                            <h5>Luan Miano</h5>
+                            <h5>{{ $topic['user']->name }}</h5>
                             <h3>{{ $topic->title }}</h3>
                             <p>{{ $topic->question }}</p>
-                            <small>{{ $topic->created_at }}</small>
+                            <small>{{ $topic->updated_at }}</small>
                         </div>
                         <div class="col-2 topic-icons">
                             <img src="../resources/icons/message.png" alt="mensagem"><span>5</span>
@@ -31,7 +31,7 @@
             @endforeach 
 
         </div>
-
+        
         <div class="mt-5 row justify-content-center">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link" href="">Back</a></li>
