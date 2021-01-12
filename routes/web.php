@@ -21,14 +21,13 @@ Route::get('/topic-create', 'TopicController@createTopic')->name('create.topic')
 Route::get('/topic-edit/{id}', 'TopicController@editTopic')->name('edit.topic');
 
 Route::post('/topic-store', 'TopicController@storeTopic')->name('store.topic');
-Route::post('/topic-update', 'TopicController@updateTopic')->name('update.topic');
+Route::put('/topic-update', 'TopicController@updateTopic')->name('update.topic');
 
 //Answers
-Route::get('/select-answer', function () {
-    return view('select-answer');
-});
+Route::get('/answer-edit/{id}', 'AnswersController@editAnswer')->name('edit.answer');
 
 Route::post('/answer-store', 'AnswersController@storeAnswer')->name('store.answer');
+Route::put('/answer-update', 'AnswersController@updateAnswer')->name('update.answer');
 
 Route::get('/home', 'HomeController@index')->name('home');
 

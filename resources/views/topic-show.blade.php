@@ -7,6 +7,7 @@
             <div class="topic-master-list col-sm-12">
              
                 <article class="topic">
+                    <small>{{ $topic->updated_at }}</small>
                     <header>
                         <h3>{{ $topic->title }}</h3>
                         <small>{{ $user->name }}</small>
@@ -17,8 +18,7 @@
                         @if(Auth::user()->id === $user->id)
                             <div class="justify-content-end">
                                 <hr>
-                                <a href="../public/select-answer">Editar</a>
-                                <input type="hidden" name="idTopic" value={{ $topic->id }}>
+                                <a href={{ route('edit.topic', ['id' => $topic->id]) }}>Editar</a>
                             </div>
                         @endif
                     @endif
@@ -45,8 +45,7 @@
                         @if (Auth::user()->id === $answer['user']->id)
                         
                             <div class="col-sm-1 answer-edit">
-                                <a href="../public/select-answer">Editar</a>
-                                <input type="hidden" name="idTopic" value={{ $answer->id }}>
+                                <a href="{{ route('edit.answer', ['id' => $answer->id]) }}">Editar</a>
                             </div>
                         @endif
                     @endif

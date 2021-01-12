@@ -16,8 +16,7 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('topics_id');
-            $table->string('title');
+            $table->unsignedBigInteger('topic_id');
             $table->text('response');
             $table->integer('count_likes')->nullable();
             $table->timestamps();
@@ -26,7 +25,7 @@ class CreateAnswersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
             // Relacionamento da chave id (answers), com chave id (topics) e delete cascade
-            $table->foreign('topics_id')->references('id')->on('topics')->onDelete('CASCADE');
+            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('CASCADE');
         });
     }
 

@@ -8,13 +8,14 @@
                 
                 <div id="msg"></div>
             
-                <form id="userData" action="edit-answer" method="post" onsubmit="saveTopic(event)">
+                <form id="userData" action="{{ route('update.answer') }}" method="post" onsubmit="saveTopic(event)">
+                    @csrf
+                    @method('put')
                     <div class="form-group">
                         <label for="answer">Resposta</label>
-                        <textarea class="form-control body-answer inputData" placeholder="Publique sua resposta" name="answer" rows="5">Texto</textarea>
-                        <input type="hidden" class="idAnswer inputData" name="idAnswer" value="">
-                        <input type="hidden" class="idUser inputData" name="idUser" value="">
-                        <input type="hidden" class="idTopic inputData" name="idTopic" value="">
+                        <textarea class="form-control body-answer inputData" placeholder="Publique sua resposta" name="response" rows="5">{{ $answer->response }}</textarea>
+                        <input type="hidden" class="idAnswer inputData" name="id" value="{{ $answer->id }}">
+                        <input type="hidden" class="idTopic inputData" name="id_topic" value="{{ $answer->topic_id }}">
                         <button type="submit" class="btn-lg btn-primary my-3">Enviar</button>
                     </div>
                 </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -38,32 +39,24 @@ class TopicController extends Controller
 
     public function showTopic($id)
     {
-        $topic = Topic::where('topics.id', '=', $id)->first();
+        $topic = self::selectTopic($id);
         
         $user = $topic->user()->first();
         
         $answers = $topic->answers()->with('user')->get();
-       
-        return view('show-topic', [
+        
+        return view('topic-show', [
             'user' => $user,
             'topic' => $topic,
             'answers' => $answers
         ]);
     }
 
-    public function selectTopic($id)
+    public static function selectTopic($id)
     {
         $topic = Topic::where('topics.id', '=', $id)->first();
         
-        $user = $topic->user()->first();
-
-        $answers = $topic->answers()->with('user')->get();
-        
-        return view('select-topic', [
-            'user' => $user,
-            'topic' => $topic,
-            'answers' => $answers
-        ]);
+        return $topic;
     }
 
     public function createTopic()
@@ -73,7 +66,30 @@ class TopicController extends Controller
 
     public function editTopic($id)
     {
-        $topic = Topic::where('topics.id', '=', $id)->first(); 
+        $topic = self::selectTopic($id);
+
+        return view('topic-edit', [
+            'topic' => $topic
+        ]);
+    }
+
+    public function updateTopic(Request $request)
+    {
+        if(Auth::check()) {
+            $request->except(['_token']);
+
+            $params = $request->all();
+            $topic = Topic::find($request->id);
+
+            //$topic->title    = $request->title;
+            //$topic->question = $request->question;
+            
+            $topic->update($params);
+
+            return redirect()->route('show.topic',['id' => $request->id]);
+        } else {
+            return redirect()->route('showRegister.user');
+        }
     }
 
 }
