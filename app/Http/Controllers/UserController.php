@@ -46,7 +46,7 @@ class userController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return redirect()->back();
+        return redirect()->route('index.topics');
     }
 
     /**

@@ -18,7 +18,8 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('topic_id');
             $table->text('response');
-            $table->integer('count_likes')->nullable();
+            $table->integer('count_likes')->default('0');
+            $table->integer('active')->default('1');
             $table->timestamps();
 
             // Relacionamento da chave id (answers), com chave id (users) e delete cascade

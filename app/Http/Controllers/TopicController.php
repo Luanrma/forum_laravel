@@ -13,7 +13,7 @@ class TopicController extends Controller
     public function index() 
     {   
         $topics = Topic::with('user')->get();
-        
+    
         return view('topics', [
             'topics' => $topics
         ]);
@@ -23,17 +23,18 @@ class TopicController extends Controller
     {   
         if(Auth::check()) {
             $request->except(['_token']);
-            
+
             $topic = new Topic();
+            $topic->user_id = Auth::user()->id;
             $topic->title = $request->title;
             $topic->question = $request->question;
             $topic->active = 1;
-            $topic->user_id = Auth::user()->id;
+           
             $topic->save();
 
             return redirect()->route('index.topics');
         } else {
-            return redirect()->route('showRegister.user');
+            return redirect()->route('showLogin.user');
         }
     }
 
@@ -88,7 +89,7 @@ class TopicController extends Controller
 
             return redirect()->route('show.topic',['id' => $request->id]);
         } else {
-            return redirect()->route('showRegister.user');
+            return redirect()->route('showLogin.user');
         }
     }
 

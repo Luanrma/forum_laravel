@@ -24,7 +24,7 @@
                             <small>{{ $topic->updated_at }}</small>
                         </div>
                         <div class="col-2 topic-icons">
-                            <img src="../resources/icons/message.png" alt="mensagem"><span>5</span>
+                            <img src="../resources/icons/message.png" alt="mensagem"><span>{{ $topic->count_answers }}</span>
                         </div>
                     </article>
                 </a>

@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Answer;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AnswersController extends Controller
 {
+    
+
     public function storeAnswer(Request $request)
     {   
         if(Auth::check()) {
             $request->except(['_token']);
-            
+                 
+            $topic = Topic::find($request->topic_id);
+            $topic->count_answers = $topic->count_answers + 1;
+            $topic->save();
+
             $answer = new Answer();
             $answer->user_id = Auth::user()->id;
             $answer->topic_id = $request->topic_id;
-            //$answer->title = $request->response;
+            
             $answer->response = $request->response;
             $answer->save();
 
             return redirect()->back();
         } else {
-            return redirect()->route('showRegister.user');
+            return redirect()->route('showLogin.user');
         }
     }
 
@@ -52,7 +60,7 @@ class AnswersController extends Controller
 
             return redirect()->route('show.topic',['id' => $request->id_topic]);
         } else {
-            return redirect()->route('showRegister.user');
+            return redirect()->route('showLogin.user');
         }
     }
 }

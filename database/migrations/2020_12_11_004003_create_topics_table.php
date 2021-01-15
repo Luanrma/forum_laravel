@@ -18,8 +18,8 @@ class CreateTopicsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('question');
-            $table->integer('active');
-            $table->integer('count_answers')->nullable();
+            $table->integer('active')->default('1');
+            $table->integer('count_answers')->default('0');
             $table->timestamps();
 
             // Relacionamento da chave id (topics), com chave id (users) e delete cascade
